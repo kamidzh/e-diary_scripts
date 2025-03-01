@@ -28,7 +28,15 @@ def remove_chastisements(schoolkid_name):
 
 def create_commendation(schoolkid_name, subject_title):
     schoolkid = get_schoolkid(schoolkid_name)
-    lesson = Lesson.objects.filter(year_of_study=schoolkid.year_of_study, group_letter=schoolkid.group_letter, subject__title=subject_title).order_by('-date').first()
+    lesson = (
+        Lesson.objects.filter(
+            year_of_study=schoolkid.year_of_study,
+            group_letter=schoolkid.group_letter,
+            subject__title=subject_title,
+        )
+        .order_by("-date")
+        .first()
+    )
     commendations = [
         'Молодец!', 
         'Отлично!', 
@@ -65,3 +73,4 @@ def create_commendation(schoolkid_name, subject_title):
         subject=lesson.subject,
         teacher=lesson.teacher,
     )
+    
